@@ -1,0 +1,27 @@
+name: Changelog Workflow
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [ closed ]
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set file permissions
+        run: |
+          chmod 777 ./changelog.md
+
+      - name: Write commit message to changelog
+        run: |
+          git config --global user.name "user"
+          git config --global user.email "user@test.com"
+          echo -e "Update: ${{ github.event.pull_request.title }}\n" >> ./changelog.md
+          git add ./changelog.md
+          git commit -m "docs: updated changelog"
+          git push
