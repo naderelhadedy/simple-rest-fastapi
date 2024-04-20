@@ -25,4 +25,4 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --output-format=colorized ./src
+          pylint --output-format=colorized ./app
