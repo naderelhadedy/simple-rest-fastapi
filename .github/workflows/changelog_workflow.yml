@@ -1,14 +1,15 @@
 name: Changelog Workflow
 
 on:
-  pull_request:
-    branches: [ dev ]
-    types: [ closed ]
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Set Release Version'
+        required: true
 
 jobs:
   changelog:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
 
     steps:
       - name: Checkout code
@@ -20,4 +21,5 @@ jobs:
           changelog_filename: CHANGELOG.md
           committer_username: 'naderelhadedy'
           committer_email: 'elhadedynader@gmail.com'
+          release_version: ${{ github.event.inputs.release_version }}
 
