@@ -9,21 +9,27 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set file permissions
-        run: |
-          chmod 777 ./changelog.md
+      - name: Install dependencies
+        run: npm install
 
-      - name: Update changelog
-        uses: danpetitt/changelog-file-generator@v2.2.1
+      - name: Generate changelog
+        run: npx conventional-changelog -p angular -i CHANGELOG.md -s
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit files
+        run: |
+          git config --local user.email "elhadedynader@gmail.com"
+          git config --local user.name "naderelhadedy"
+          git add CHANGELOG.md
+          git commit -m "Generate changelog"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release_version: 'v1.0.0'
-          file: './changelog.md'
-          files_to_commit: 'changelog.md'
-          branch: dev
-          user: 'elhadedynader@gmail.com'
-          userName: 'naderelhadedy'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
