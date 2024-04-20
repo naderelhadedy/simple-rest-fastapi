@@ -14,22 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install conventional-changelog
-        run: pip install conventional-changelog
-
-      - name: Generate changelog
-        run: conventional-changelog -p angular -i CHANGELOG.md -s
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Commit files
-        run: |
-          git config --local user.email "elhadedynader@gmail.com"
-          git config --local user.name "naderelhadedy"
-          git add CHANGELOG.md
-          git commit -m "docs: updated changelog"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.1.2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog_filename: CHANGELOG.md
+          committer_username: 'naderelhadedy'
+          committer_email: 'elhadedynader@gmail.com'
