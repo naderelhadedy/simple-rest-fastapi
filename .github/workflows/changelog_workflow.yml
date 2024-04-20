@@ -17,11 +17,13 @@ jobs:
         run: |
           chmod 777 ./changelog.md
 
-      - name: Write commit message to changelog
-        run: |
-          git config --global user.name "user"
-          git config --global user.email "user@test.com"
-          echo -e "Update: ${{ github.event.pull_request.title }}\n" >> ./changelog.md
-          git add ./changelog.md
-          git commit -m "docs: updated changelog"
-          git push
+      - name: Update changelog
+        uses: danpetitt/changelog-file-generator@v2.2.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release_version: 'v1.0.0'
+          file: './changelog.md'
+          files_to_commit: 'changelog.md'
+          branch: dev
+          user: 'elhadedynader@gmail.com'
+          userName: 'naderelhadedy'
