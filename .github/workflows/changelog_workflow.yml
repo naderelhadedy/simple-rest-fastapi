@@ -14,11 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install conventional-changelog
+        run: pip install conventional-changelog
 
       - name: Generate changelog
-        run: npx conventional-changelog -p angular -i CHANGELOG.md -s
+        run: conventional-changelog -p angular -i CHANGELOG.md -s
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -27,7 +27,7 @@ jobs:
           git config --local user.email "elhadedynader@gmail.com"
           git config --local user.name "naderelhadedy"
           git add CHANGELOG.md
-          git commit -m "Generate changelog"
+          git commit -m "docs: updated changelog"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
