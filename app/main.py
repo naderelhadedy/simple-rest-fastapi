@@ -28,11 +28,6 @@ class AppCreator:
         # set db and container
         self.container = Container()
         self.db = self.container.db()
-        print("#"*30, self.db._conn.cursor().execute(
-            """
-            SELECT count(*) from persons;
-            """
-        ))
 
         # set cors
         if Configs.BACKEND_CORS_ORIGINS:
