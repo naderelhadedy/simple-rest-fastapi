@@ -16,8 +16,8 @@ class BaseService:
         """
         return self._repository.create(schema)
 
-    def get_by_id(self, id: int):
+    def get_by_id(self, row_id: int):
         """
         get by id
         """
-        return self._repository.read_by_id(id)
+        return self._repository.read_by_id(row_id)

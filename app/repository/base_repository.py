@@ -26,16 +26,16 @@ class BaseRepository:
             try:
                 session.add(query)
                 session.commit()
-            except psycopg2.IntegrityError as e:
+            except psycopg2.IntegrityError as e: # pylint: disable=raise-missing-from
                 raise DuplicatedError(detail=str(e))
             return query
 
-    def read_by_id(self, id: int):
+    def read_by_id(self, row_id: int):
         """
         read by id method
         """
         with self.session_factory() as session:
-            query = session.get(self.model, id)
+            query = session.get(self.model, row_id)
             if query is None:
-                raise NotFoundError(detail=f"not found id : {id}")
+                raise NotFoundError(detail=f"not found id : {row_id}")
             return query

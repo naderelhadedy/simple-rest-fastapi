@@ -11,7 +11,7 @@ from app.core.config import Configs
 from app.core.container import Container
 from app.util.class_object import singleton
 
-
+# pylint: disable=too-few-public-methods
 @singleton
 class AppCreator:
     """
