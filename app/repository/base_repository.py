@@ -26,8 +26,8 @@ class BaseRepository:
             try:
                 session.add(query)
                 session.commit()
-            except psycopg2.IntegrityError as e:  # pylint: disable=raise-missing-from
-                raise DuplicatedError(detail=str(e))
+            except psycopg2.IntegrityError as e:
+                raise DuplicatedError(detail=str(e)) from e
             return query
 
     def read_by_id(self, row_id: int):
