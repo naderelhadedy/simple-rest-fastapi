@@ -26,7 +26,7 @@ class BaseRepository:
             try:
                 session.add(query)
                 session.commit()
-            except psycopg2.IntegrityError as e: # pylint: disable=raise-missing-from
+            except psycopg2.IntegrityError as e:  # pylint: disable=raise-missing-from
                 raise DuplicatedError(detail=str(e))
             return query
 
