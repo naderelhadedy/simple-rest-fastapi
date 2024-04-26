@@ -13,12 +13,9 @@ class BaseRepository:
     """
     BaseRepository
     """
-    def __init__(self, session_factory, model) -> None:
+    def __init__(self, session_factory: Callable[[], Session], model) -> None:
         self.session_factory = session_factory
         self.model = model
-    # def __init__(self, session_factory: Callable[[], Session], model) -> None:
-    #     self.session_factory = session_factory
-    #     self.model = model
 
     def create(self, schema):
         """
@@ -38,9 +35,7 @@ class BaseRepository:
         read by id method
         """
         with self.session_factory() as session:
-            return session.cursor().execute(f"SELECT * FROM persons WHERE id={id};")
-        # with self.session_factory() as session:
-        #     query = session.get(self.model, id)
-        #     if query is None:
-        #         raise NotFoundError(detail=f"not found id : {id}")
-        #     return query
+            query = session.get(self.model, id)
+            if query is None:
+                raise NotFoundError(detail=f"not found id : {id}")
+            return query
