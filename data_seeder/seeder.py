@@ -91,8 +91,8 @@ def main():
     company_data = load_json_data("./fake_company_data.json")
     connection = connect_to_postgres(db_credentials)
 
-    insert_json_data(connection, person_data, "persons")
-    insert_json_data(connection, company_data, "companies")
+    insert_json_data(connection, person_data, "person")
+    insert_json_data(connection, company_data, "company")
 
     connection.close()
 
